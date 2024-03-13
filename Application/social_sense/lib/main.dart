@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:social_sense/controllers/login_controller.dart';
 import 'package:social_sense/routes/route.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/theme/theme.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final loginController = Get.put(LoginController());
+  final token = await loginController.getToken();
+  runApp(MyApp(token: token));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String? token;
+  const MyApp({super.key, this.token});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: theme,
       getPages: Routes.pages,
-      initialRoute: RouteNames.login,
+      initialRoute: token != null ? RouteNames.home : RouteNames.login,
       defaultTransition: Transition.noTransition,
     );
   }

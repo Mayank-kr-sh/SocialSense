@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
+import 'package:social_sense/controllers/login_controller.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/widgets/auth_input.dart';
 
@@ -19,7 +20,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void submit() {
     if (_formKey.currentState!.validate()) {
-      print('All Thing Work Fine');
+      // print('All Thing Work Fine');
+      String email = _emailController.text;
+      String password = _passwordController.text;
+      LoginController().loginUser(email, password);
     }
   }
 
