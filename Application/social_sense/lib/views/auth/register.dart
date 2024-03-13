@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
+import 'package:social_sense/controllers/registration_controller.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/widgets/auth_input.dart';
 
@@ -20,7 +21,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void submit() {
     if (_formKey.currentState!.validate()) {
-      print('All Thing Work Fine');
+      String name = _nameController.text;
+      String email = _emailController.text;
+      String password = _passwordController.text;
+      // print('All Thing Work Fine');
+      RegistrationController().registerUser(name, email, password);
     }
   }
 

@@ -34,7 +34,9 @@ dependencies:
   form_validator: ^2.1.1
   get: ^4.6.6
   get_storage: ^2.1.1
+  http: ^1.2.0
   logger: ^2.1.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
 
