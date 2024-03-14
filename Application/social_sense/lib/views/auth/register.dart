@@ -96,32 +96,37 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         .build(),
                   ),
                   const SizedBox(height: 20),
-                  ElevatedButton(
-                    style: ButtonStyle(
-                      padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 30,
+                  Obx(() => ElevatedButton(
+                        style: ButtonStyle(
+                          padding: MaterialStateProperty.all(
+                            const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 30,
+                            ),
+                          ),
+                          minimumSize: MaterialStateProperty.all(
+                            const Size(double.infinity, 0),
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                          ),
                         ),
-                      ),
-                      minimumSize: MaterialStateProperty.all(
-                        const Size(double.infinity, 0),
-                      ),
-                      shape: MaterialStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                    ),
-                    onPressed: submit,
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                        onPressed: submit,
+                        child: RegistrationController().registerLoading.value
+                            ? const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation(Colors.white),
+                              )
+                            : const Text(
+                                'Submit',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                      )),
                   const SizedBox(height: 20),
                   Text.rich(
                     TextSpan(

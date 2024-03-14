@@ -1,16 +1,18 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/utils/api_endpoints.dart';
 import 'package:http/http.dart' as http;
+import 'package:social_sense/utils/styles/helper.dart';
 
 class LoginController extends GetxController {
+  var loginLoading = false.obs;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   Future<void> loginUser(String email, String password) async {
     try {
+      loginLoading.value = true;
       var headers = {
         'Content-Type': 'application/json',
       };
@@ -26,6 +28,7 @@ class LoginController extends GetxController {
         headers: headers,
         body: json.encode(body),
       );
+      loginLoading.value = false;
       if (response.statusCode == 200) {
         final SharedPreferences prefs = await _prefs;
         var data = json.decode(response.body);
@@ -36,10 +39,11 @@ class LoginController extends GetxController {
         prefs.setString('token', token);
         Get.toNamed(RouteNames.home);
       } else {
-        showErrorDialog(json.decode(response.body)['message']);
+        showErrorDialog(json.decode(response.body)['message'], 'Error');
       }
     } catch (e) {
-      showErrorDialog(e.toString());
+      loginLoading.value = false;
+      showErrorDialog(e.toString(), 'Error');
     }
   }
 
@@ -51,26 +55,5 @@ class LoginController extends GetxController {
   Future<String?> getToken() async {
     final SharedPreferences prefs = await _prefs;
     return prefs.getString('token');
-  }
-
-  void showErrorDialog(String message) {
-    Get.back();
-    showDialog(
-      barrierColor: const Color.fromARGB(92, 165, 147, 147),
-      context: Get.context!,
-      builder: (context) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(message),
-        contentPadding: const EdgeInsets.all(10),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
   }
 }

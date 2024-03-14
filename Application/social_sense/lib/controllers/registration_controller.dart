@@ -1,13 +1,15 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/utils/api_endpoints.dart';
 import 'package:http/http.dart' as http;
+import 'package:social_sense/utils/styles/helper.dart';
 
 class RegistrationController extends GetxController {
+  var registerLoading = false.obs;
   Future<void> registerUser(String name, String email, String password) async {
     try {
+      registerLoading.value = true;
       var headers = {
         'Content-Type': 'application/json',
       };
@@ -24,50 +26,19 @@ class RegistrationController extends GetxController {
         headers: headers,
         body: json.encode(body),
       );
+
+      registerLoading.value = false;
       if (response.statusCode == 200) {
         name = '';
         email = '';
         password = '';
-        Get.off(RouteNames.login);
+        Get.offAllNamed(RouteNames.login);
       } else {
-        Get.back();
-        showDialog(
-          barrierColor: const Color.fromARGB(92, 165, 147, 147),
-          context: Get.context!,
-          builder: (context) => AlertDialog(
-            title: const Text('Error'),
-            content: Text(json.decode(response.body)['message']),
-            contentPadding: const EdgeInsets.all(10),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          ),
-        );
+        showErrorDialog(json.decode(response.body)['message'], 'Error');
       }
     } catch (e) {
-      Get.back();
-      showDialog(
-        barrierColor: const Color.fromARGB(92, 165, 147, 147),
-        context: Get.context!,
-        builder: (context) => AlertDialog(
-          title: const Text('Error'),
-          content: Text(e.toString()),
-          contentPadding: const EdgeInsets.all(10),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
+      registerLoading.value = false;
+      showErrorDialog(e.toString(), 'Error');
     }
   }
 }

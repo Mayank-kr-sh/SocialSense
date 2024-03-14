@@ -3,10 +3,11 @@ import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/views/auth/login.dart';
 import 'package:social_sense/views/auth/register.dart';
 import 'package:social_sense/views/home.dart';
+import 'package:social_sense/views/profile/edit_profile.dart';
 
 class Routes {
   static final pages = [
-    GetPage(name: RouteNames.home, page: () => const Home()),
+    GetPage(name: RouteNames.home, page: () => Home()),
     GetPage(
         name: RouteNames.login,
         page: () => const LoginScreen(),
@@ -14,6 +15,10 @@ class Routes {
     GetPage(
         name: RouteNames.register,
         page: () => const RegisterScreen(),
-        transition: Transition.cupertino)
+        transition: Transition.cupertino),
+    GetPage(
+        name: RouteNames.editProfile,
+        page: () => const EditProfile(),
+        transition: Transition.leftToRight),
   ];
 }
