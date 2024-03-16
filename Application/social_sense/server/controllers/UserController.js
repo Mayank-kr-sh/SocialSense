@@ -73,25 +73,59 @@ exports.login = async (req, res) => {
         email: user.email,
       },
     };
-
+    const { password: userPassword, __v, ...userData } = user.toObject();
     const token = jwt.sign(payload, "Mayank", {
       expiresIn: 3600,
     });
 
-    const data = {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      token,
-    };
-
     return res.status(200).json({
       success: true,
       message: "User logged in successfully",
-      data,
+      user: userData,
+      token,
     });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Login Server Error", err.message);
+  }
+};
+
+exports.update = async (req, res) => {
+  const { id, bio, name, phone, dob } = req.body;
+  try {
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const updated = await User.findByIdAndUpdate(
+      id,
+      {
+        bio,
+        name,
+        phone,
+        dob,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      data: updated,
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(400).json({
+      success: false,
+      message: "User cannot be updated. Please try again later.",
+    });
   }
 };

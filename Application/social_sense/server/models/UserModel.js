@@ -4,7 +4,6 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   password: {
     required: true,
@@ -20,11 +19,12 @@ const userSchema = new mongoose.Schema({
   },
   bio: {
     type: String,
-    default: " ",
   },
-  points: {
-    type: Number,
-    default: 0,
+  phone: {
+    type: String,
+  },
+  dob: {
+    type: String,
   },
   posts: [
     {

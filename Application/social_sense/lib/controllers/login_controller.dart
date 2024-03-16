@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:social_sense/controllers/user_controller.dart';
+import 'package:social_sense/models/auth_model.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/utils/api_endpoints.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +11,7 @@ import 'package:social_sense/utils/styles/helper.dart';
 class LoginController extends GetxController {
   var loginLoading = false.obs;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final UserController userController = Get.put(UserController());
 
   Future<void> loginUser(String email, String password) async {
     try {
@@ -32,11 +35,12 @@ class LoginController extends GetxController {
       if (response.statusCode == 200) {
         final SharedPreferences prefs = await _prefs;
         var data = json.decode(response.body);
-        var token = data['data']['token'];
-        // print(token);
-        // print('User email: $email');
-        // print('User password: $password');
-        prefs.setString('token', token);
+        AuthModel authModel = AuthModel.fromJson(data);
+        prefs.setString('token', authModel.token);
+        print('Token: ${authModel.token}');
+        Map<String, dynamic> userData = authModel.user.toJson();
+        print('User Data: $userData');
+        userController.setUser(authModel);
         Get.toNamed(RouteNames.home);
       } else {
         showErrorDialog(json.decode(response.body)['message'], 'Error');
@@ -44,6 +48,7 @@ class LoginController extends GetxController {
     } catch (e) {
       loginLoading.value = false;
       showErrorDialog(e.toString(), 'Error');
+      print(e.toString());
     }
   }
 
