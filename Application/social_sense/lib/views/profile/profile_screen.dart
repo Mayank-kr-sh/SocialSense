@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sense/controllers/profile_controller.dart';
+import 'package:social_sense/controllers/user_controller.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/utils/styles/button_styles.dart';
 
@@ -13,6 +14,8 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final ProfileController _profileController = Get.put(ProfileController());
+  final UserController userController = Get.put(UserController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,21 +48,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Mayank Kumar Shah',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                Text(
+                                  userController.getUser?.name ?? 'User Name',
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                                SizedBox(
-                                    width: context.width * 0.6,
-                                    child: const Text('Flutter Developer')),
+                                const SizedBox(height: 5),
+                                Text(
+                                  userController.getUser?.bio ?? 'User Bio',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Date of Birth: ${userController.getUser?.dob ?? 'User DOB'}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                               ],
                             ),
                             const CircleAvatar(
                               radius: 50,
                               backgroundImage:
-                                  AssetImage('assets/images/avatar.png'),
+                                  AssetImage('assets/images/icon.jpg'),
                             ),
                           ],
                         ),
