@@ -61,4 +61,9 @@ class LoginController extends GetxController {
     final SharedPreferences prefs = await _prefs;
     return prefs.getString('token');
   }
+
+  Future<void> clearToken() async {
+    final SharedPreferences prefs = await _prefs;
+    await prefs.remove('token');
+  }
 }

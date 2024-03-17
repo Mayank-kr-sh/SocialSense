@@ -20,15 +20,6 @@ class _EditProfileState extends State<EditProfile> {
       TextEditingController(text: '');
   final TextEditingController _dateController = TextEditingController(text: '');
 
-  // @override
-  // void initState() {
-  //   _descriptionController.text = controller.authModel.value.data!.description;
-  //   _nameController.text = controller.authModel.value.data!.name;
-  //   _numberController.text = controller.authModel.value.data!.number;
-  //   _dateController.text = controller.authModel.value.data!.dob;
-  //   super.initState();
-  // }
-
   DateTime? _selectedDate;
 
   Future<void> _selectDate(BuildContext context) async {
@@ -69,11 +60,19 @@ class _EditProfileState extends State<EditProfile> {
         title: const Text('Edit Profile'),
         centerTitle: false,
         actions: [
-          TextButton(
-            onPressed: onSubmit,
-            child: const Text(
-              'Done',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+          Obx(
+            () => TextButton(
+              onPressed: onSubmit,
+              child: controller.loading.value
+                  ? const SizedBox(
+                      height: 14,
+                      width: 14,
+                      child: CircularProgressIndicator(),
+                    )
+                  : const Text(
+                      'Done',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
             ),
           )
         ],

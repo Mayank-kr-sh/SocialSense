@@ -91,7 +91,7 @@ exports.login = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { id, bio, name, phone, dob } = req.body;
+  const { id, ...updateFields } = req.body;
   try {
     const user = await User.findById(id);
 
@@ -102,19 +102,17 @@ exports.update = async (req, res) => {
       });
     }
 
-    const updated = await User.findByIdAndUpdate(
-      id,
-      {
-        bio,
-        name,
-        phone,
-        dob,
-      },
-      {
-        new: true,
-        runValidators: true,
+    let updateObject = {};
+    for (let field in updateFields) {
+      if (updateFields[field] !== undefined) {
+        updateObject[field] = updateFields[field];
       }
-    );
+    }
+
+    const updated = await User.findByIdAndUpdate(id, updateObject, {
+      new: true,
+      runValidators: true,
+    });
 
     return res.status(200).json({
       success: true,
