@@ -43,39 +43,52 @@ class ProfileController extends GetxController {
       final UserController userController = Get.put(UserController());
       UserModel? currentUser = userController.getUser;
       String id = currentUser!.id;
+      String? currentName = currentUser.name;
 
       print('User ID: $id');
       Map<String, dynamic> body = {
         'id': id,
-        'name': name,
-        'bio': bio,
-        'phone': number,
-        'dob': dob,
       };
+
+      if (name.isNotEmpty) {
+        body['name'] = name;
+      }
+      if (bio.isNotEmpty) {
+        body['bio'] = bio;
+      }
+      if (number.isNotEmpty) {
+        body['phone'] = number;
+      }
+      if (dob.isNotEmpty) {
+        body['dob'] = dob;
+      }
+
       var response = await http.post(
         url,
         headers: headers,
         body: json.encode(body),
       );
       if (response.statusCode == 200) {
-        print('User updated');
+        // print('User updated');
         UserModel user = UserModel(
           id: id,
-          name: name,
-          bio: bio,
-          dob: dob,
-          phone: number,
+          name: name.isNotEmpty ? name : currentUser.name,
+          bio: bio.isNotEmpty ? bio : currentUser.bio,
+          dob: dob.isNotEmpty ? dob : currentUser.dob,
+          phone: number.isNotEmpty ? number : currentUser.phone,
         );
+        loading.value = false;
         print(user.name);
         userController.updateUser(user);
         Get.back();
       } else {
+        loading.value = false;
         print('Error updating user');
         print('Error updating user: ${response.body}');
         showErrorDialog('Error updating user', 'Error');
       }
-      loading.value = false;
     } catch (e, stackTrace) {
+      loading.value = false;
       print('Error: $e');
       print('Stack trace: $stackTrace');
       showErrorDialog(e.toString(), 'Error');

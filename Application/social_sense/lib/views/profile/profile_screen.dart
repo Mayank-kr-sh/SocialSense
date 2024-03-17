@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:social_sense/controllers/login_controller.dart';
 import 'package:social_sense/controllers/profile_controller.dart';
 import 'package:social_sense/controllers/user_controller.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/utils/styles/button_styles.dart';
+import 'package:social_sense/widgets/image.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -24,8 +26,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           centerTitle: false,
           actions: [
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.sort),
+              onPressed: () {
+                _showLogoutConfirmation(context);
+              },
+              icon: const Icon(Icons.logout),
             ),
           ],
         ),
@@ -73,10 +77,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                               ],
                             ),
-                            const CircleAvatar(
+                            const CircleImage(
                               radius: 50,
-                              backgroundImage:
-                                  AssetImage('assets/images/icon.jpg'),
                             ),
                           ],
                         ),
@@ -184,4 +186,84 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return false;
   }
+}
+
+void _showLogoutConfirmation(BuildContext context) {
+  LoginController loginController = Get.put(LoginController());
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              'Logout',
+              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8.0),
+            const Divider(
+              color: Colors.grey,
+              thickness: 1.0,
+              height: 20.0,
+            ),
+            const SizedBox(height: 8.0),
+            const Text(
+              'Are you sure you want to log out?',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            const SizedBox(height: 16.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(100, 50),
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16),
+                    backgroundColor: Colors.grey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text(
+                    'No',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(100, 50),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      backgroundColor: Colors.red,
+                      textStyle: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      print('LogOut');
+                      Navigator.of(context).pop();
+                      loginController.clearToken();
+                      Get.offAllNamed(RouteNames.login);
+                    },
+                    child: const Text(
+                      'Yes',
+                      style: TextStyle(color: Colors.white),
+                    )),
+              ],
+            ),
+          ],
+        ),
+      );
+    },
+  );
 }
