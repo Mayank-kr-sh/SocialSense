@@ -13,4 +13,5 @@ class AuthEndPoint {
 class UserEndPoint {
   final String update = '/update';
   final String get = '/user';
+  final String post = '/upload';
 }

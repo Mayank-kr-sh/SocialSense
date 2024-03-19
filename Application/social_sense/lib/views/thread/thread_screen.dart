@@ -25,7 +25,7 @@ class _ThreadScreenState extends State<ThreadScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const AddThreadAppBar(),
+              AddThreadAppBar(),
               const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -54,7 +54,7 @@ class _ThreadScreenState extends State<ThreadScreen> {
                           ),
                         ),
                         TextField(
-                          controller: threadController.textEditingController,
+                          controller: threadController.contentController,
                           onChanged: (value) {
                             threadController.content.value = value;
                           },
