@@ -30,7 +30,7 @@ class ProfileController extends GetxController {
       loading.value = true;
       final loginController = Get.put(LoginController());
       final token = await loginController.getToken();
-      print('objec, $token');
+      print('user Token, $token');
       await Future.delayed(const Duration(seconds: 2));
       var headers = {
         'Content-Type': 'application/json',

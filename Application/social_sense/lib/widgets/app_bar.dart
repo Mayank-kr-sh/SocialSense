@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:social_sense/controllers/thread_controller.dart';
 
 class AddThreadAppBar extends StatelessWidget {
-  const AddThreadAppBar({super.key});
+  AddThreadAppBar({super.key});
+
+  final ThreadController threadController = Get.find<ThreadController>();
+
+  void onSubmit() {
+    threadController.uploadPost();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +40,16 @@ class AddThreadAppBar extends StatelessWidget {
               ),
             ],
           ),
-          TextButton(
-            onPressed: () {},
-            child: const Text('Post'),
+          Obx(
+            () => TextButton(
+                onPressed: onSubmit,
+                child: threadController.loading.value
+                    ? const SizedBox(
+                        height: 14,
+                        width: 14,
+                        child: CircularProgressIndicator(),
+                      )
+                    : const Text('Post')),
           )
         ],
       ),
