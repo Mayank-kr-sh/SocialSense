@@ -22,6 +22,12 @@ class ThreadController extends GetxController {
     }
   }
 
+  void resetState() {
+    content.value = '';
+    contentController.clear();
+    images.value = null;
+  }
+
   @override
   void onClose() {
     contentController.dispose();
@@ -83,8 +89,7 @@ class ThreadController extends GetxController {
       if (response.statusCode == 200) {
         showErrorDialog('Post uploaded successfully', 'Success');
         print('Response: ${response.toString()}');
-        images.value = null;
-        contentController.clear();
+        resetState();
       } else {
         // Handle error
         print('Failed to upload post: ${response.reasonPhrase}');

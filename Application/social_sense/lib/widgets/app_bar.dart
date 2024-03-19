@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sense/controllers/thread_controller.dart';
+import 'package:social_sense/services/navigation_services.dart';
 
 class AddThreadAppBar extends StatelessWidget {
   AddThreadAppBar({super.key});
@@ -30,6 +31,7 @@ class AddThreadAppBar extends StatelessWidget {
               IconButton(
                 onPressed: () {
                   // Navigator.pop(context);
+                  Get.find<NavigationService>().backToPrev();
                 },
                 icon: const Icon(Icons.close),
               ),

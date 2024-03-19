@@ -22,4 +22,8 @@ class NavigationService extends GetxService {
     prevIndex.value = currentIndex.value;
     currentIndex.value = index;
   }
+
+  void backToPrev() {
+    currentIndex.value = prevIndex.value;
+  }
 }
