@@ -1,61 +1,127 @@
 import 'dart:convert';
 
-Post postFromJson(String str) => Post.fromJson(json.decode(str));
+PostModel postModelFromJson(String str) => PostModel.fromJson(json.decode(str));
 
-String postToJson(Post data) => json.encode(data.toJson());
+String postModelToJson(PostModel data) => json.encode(data.toJson());
 
-class Post {
-  Data data;
+class PostModel {
+  List<Post> posts;
 
-  Post({
-    required this.data,
+  PostModel({
+    required this.posts,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) => Post(
-        data: Data.fromJson(json["data"]),
-      );
+  factory PostModel.fromJson(Map<String, dynamic> json) {
+    List<Post> posts = [];
+    if (json['posts'] != null) {
+      if (json['posts'] is List) {
+        posts = List<Post>.from(
+            json['posts'].map<Post>((postData) => Post.fromJson(postData)));
+      } else {}
+    }
+    return PostModel(posts: posts);
+  }
 
   Map<String, dynamic> toJson() => {
-        "data": data.toJson(),
+        "posts": List<dynamic>.from(posts.map((x) => x.toJson())),
       };
 }
 
-class Data {
-  String user;
-  List<dynamic> comments;
-  List<dynamic> likes;
-  String caption;
-  List<dynamic> media;
+class Post {
   String id;
+  User user;
+  List<Comment> comments;
+  String caption;
+  List<String> media;
   DateTime createdAt;
+  int totalLikes;
+  int totalComments;
 
-  Data({
+  Post({
+    required this.id,
     required this.user,
     required this.comments,
-    required this.likes,
     required this.caption,
     required this.media,
+    required this.createdAt,
+    required this.totalLikes,
+    required this.totalComments,
+  });
+
+  factory Post.fromJson(Map<String, dynamic> json) {
+    return Post(
+      id: json["_id"],
+      user: User.fromJson(json["user"]),
+      comments: json["comments"] == null
+          ? []
+          : List<Comment>.from(
+              json["comments"].map((x) => Comment.fromJson(x))),
+      caption: json["caption"],
+      media: json["media"] == null
+          ? []
+          : List<String>.from(json["media"].map((x) => x)),
+      createdAt: DateTime.parse(json["createdAt"]),
+      totalLikes: json["totalLikes"] ?? 0,
+      totalComments: json["totalComments"] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "user": user.toJson(),
+        "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
+        "caption": caption,
+        "media": List<dynamic>.from(media.map((x) => x)),
+        "createdAt": createdAt.toIso8601String(),
+        "totalLikes": totalLikes,
+        "totalComments": totalComments,
+      };
+}
+
+class Comment {
+  String id;
+  User user;
+  String text;
+  DateTime createdAt;
+
+  Comment({
     required this.id,
+    required this.user,
+    required this.text,
     required this.createdAt,
   });
 
-  factory Data.fromJson(Map<String, dynamic> json) => Data(
-        user: json["user"],
-        comments: List<dynamic>.from(json["comments"].map((x) => x)),
-        likes: List<dynamic>.from(json["likes"].map((x) => x)),
-        caption: json["caption"],
-        media: List<dynamic>.from(json["media"].map((x) => x)),
+  factory Comment.fromJson(Map<String, dynamic> json) => Comment(
         id: json["_id"],
+        user: User.fromJson(json["user"]),
+        text: json["text"],
         createdAt: DateTime.parse(json["createdAt"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "user": user,
-        "comments": List<dynamic>.from(comments.map((x) => x)),
-        "likes": List<dynamic>.from(likes.map((x) => x)),
-        "caption": caption,
-        "media": List<dynamic>.from(media.map((x) => x)),
         "_id": id,
+        "user": user.toJson(),
+        "text": text,
         "createdAt": createdAt.toIso8601String(),
+      };
+}
+
+class User {
+  String id;
+  String name;
+
+  User({
+    required this.id,
+    required this.name,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        id: json["_id"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
       };
 }

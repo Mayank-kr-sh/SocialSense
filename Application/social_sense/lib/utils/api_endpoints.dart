@@ -14,4 +14,5 @@ class UserEndPoint {
   final String update = '/update';
   final String get = '/user';
   final String post = '/upload';
+  final String fetch = '/fetch';
 }
