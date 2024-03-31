@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sense/models/post_model.dart';
+import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/widgets/image.dart';
 
 class PostCard extends StatelessWidget {
@@ -76,7 +77,9 @@ class PostCard extends StatelessWidget {
                           icon: const Icon(Icons.favorite_outline),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(RouteNames.addComment, arguments: post);
+                          },
                           icon: const Icon(Icons.mode_comment_outlined),
                         ),
                         IconButton(
