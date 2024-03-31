@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,7 @@ import 'package:social_sense/utils/styles/helper.dart';
 
 class LoginController extends GetxController {
   var loginLoading = false.obs;
+  Timer? _logoutTimer;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   final UserController userController = Get.put(UserController());
 
@@ -50,6 +52,18 @@ class LoginController extends GetxController {
       showErrorDialog(e.toString(), 'Error');
       print(e.toString());
     }
+  }
+
+  void startLogoutTimer(String token) {
+    _logoutTimer?.cancel();
+
+    final expirationTime = DateTime.now().add(const Duration(hours: 1));
+
+    _logoutTimer = Timer(expirationTime.difference(DateTime.now()), () async {
+      await clearToken();
+
+      Get.offAllNamed(RouteNames.login);
+    });
   }
 
   void saveToken(String token) async {

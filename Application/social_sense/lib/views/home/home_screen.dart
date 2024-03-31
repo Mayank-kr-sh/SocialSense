@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sense/controllers/home_controller.dart';
 import 'package:social_sense/models/post_model.dart';
+import 'package:social_sense/widgets/card_loader.dart';
 import 'package:social_sense/widgets/post_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -23,7 +24,7 @@ class HomeScreen extends StatelessWidget {
                 title: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: Image.asset('assets/images/logo.png',
-                      height: 40, width: 40),
+                      height: 50, width: 300),
                 ),
                 centerTitle: true,
                 // floating: true,
@@ -33,8 +34,13 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Obx(
                       () => controller.posts.isEmpty
-                          ? const Center(
-                              child: CircularProgressIndicator(),
+                          ? ListView.builder(
+                              shrinkWrap: true,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 5,
+                              itemBuilder: (context, index) {
+                                return const ShimmerLoading();
+                              },
                             )
                           : ListView.builder(
                               shrinkWrap: true,

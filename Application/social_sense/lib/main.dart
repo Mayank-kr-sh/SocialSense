@@ -18,6 +18,9 @@ void main() async {
     print('User: ${currentUser.name}');
   }
   final token = await loginController.getToken();
+  if (token != null) {
+    loginController.startLogoutTimer(token);
+  }
   runApp(MyApp(token: token));
 }
 
