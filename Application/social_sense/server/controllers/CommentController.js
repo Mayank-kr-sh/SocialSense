@@ -6,8 +6,9 @@ const comment = require("../models/CommentsModel");
 exports.comment = async (req, res) => {
   try {
     const postId = req.params.postId;
-    const { userId } = req.body;
+    const { userId, text } = req.body;
 
+    console.log("userId", text);
     if (!postId) {
       return res.status(400).json({ msg: "PostId is required" });
     }
@@ -15,8 +16,6 @@ exports.comment = async (req, res) => {
     if (!userId) {
       return res.status(400).json({ msg: "UserId is required" });
     }
-
-    const { text } = req.body;
 
     if (!text) {
       return res.status(400).json({ msg: "Text is required" });
