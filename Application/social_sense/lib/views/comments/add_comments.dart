@@ -22,7 +22,23 @@ class Comments extends StatelessWidget {
         ),
         title: const Text('Comments'),
         actions: [
-          TextButton(onPressed: () {}, child: const Text('reply')),
+          Obx(
+            () => TextButton(
+              onPressed: () {
+                commentController.postComment();
+              },
+              child: commentController.commentLoading.value
+                  ? const SizedBox(
+                      height: 14,
+                      width: 14,
+                      child: CircularProgressIndicator(),
+                    )
+                  : const Text(
+                      'Post',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+            ),
+          ),
         ],
       ),
       body: SingleChildScrollView(
