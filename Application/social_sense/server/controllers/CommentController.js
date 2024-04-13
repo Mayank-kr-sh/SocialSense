@@ -59,3 +59,40 @@ exports.comment = async (req, res) => {
     res.status(500).json({ msg: "Server error In Commenting" });
   }
 };
+
+exports.deleteComment = async (req, res) => {
+  const { commentId } = req.params;
+
+  if (!commentId) {
+    return res.status(400).json({ msg: "CommentId is required" });
+  }
+
+  try {
+    const Comment = await comment.findById(commentId);
+
+    if (!Comment) {
+      return res.status(404).json({ msg: "Comment not found", success: false });
+    }
+
+    await comment.findByIdAndDelete(commentId);
+
+    const postUpdated = await post.findByIdAndUpdate(
+      Comment.post,
+      {
+        $pull: { comments: commentId },
+      },
+      { new: true }
+    );
+    if (Comment.user) {
+      await user.findByIdAndUpdate(Comment.user, {
+        $pull: { comments: commentId },
+      });
+    }
+    return res
+      .status(200)
+      .json({ msg: "Comment deleted successfully", postUpdated });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ msg: "Server error In Deleting Comment" });
+  }
+};

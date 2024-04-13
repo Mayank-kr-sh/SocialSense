@@ -9,7 +9,7 @@ import 'package:uuid/uuid.dart';
 void showErrorDialog(String message, String title) {
   Get.back();
   showDialog(
-    barrierColor: const Color.fromARGB(92, 165, 147, 147),
+    barrierColor: const Color.fromARGB(255, 30, 30, 30).withOpacity(0.7),
     context: Get.context!,
     builder: (context) => AlertDialog(
       title: Text(title),

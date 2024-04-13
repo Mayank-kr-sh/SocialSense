@@ -27,14 +27,14 @@ class Home extends StatelessWidget {
           items: const [
             CurvedNavigationBarItem(
               child: Icon(
-                Icons.chat_bubble_outline,
+                Icons.search,
                 color: Colors.white,
                 size: 25,
               ),
             ),
             CurvedNavigationBarItem(
               child: Icon(
-                Icons.search,
+                Icons.add,
                 color: Colors.white,
                 size: 25,
               ),
@@ -44,14 +44,14 @@ class Home extends StatelessWidget {
             ),
             CurvedNavigationBarItem(
               child: Icon(
-                Icons.person_outline,
+                Icons.favorite_border_outlined,
                 color: Colors.white,
                 size: 25,
               ),
             ),
             CurvedNavigationBarItem(
               child: Icon(
-                Icons.favorite_border_outlined,
+                Icons.person_outline,
                 color: Colors.white,
                 size: 25,
               ),

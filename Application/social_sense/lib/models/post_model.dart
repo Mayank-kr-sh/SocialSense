@@ -76,6 +76,9 @@ class Post {
         "totalLikes": totalLikes,
         "totalComments": totalComments,
       };
+
+  int get commentCount => comments.length;
+  List<Comment> get commentDetails => comments;
 }
 
 class Comment {
