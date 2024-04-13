@@ -20,5 +20,6 @@ class UserEndPoint {
 
 class PostEndPoint {
   final String comment = 'comment/';
+  final String delete = '/delete/';
   final String like = '/like';
 }

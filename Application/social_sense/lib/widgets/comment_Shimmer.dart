@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerLoading extends StatelessWidget {
-  const ShimmerLoading({super.key});
+class CommentShimmer extends StatelessWidget {
+  const CommentShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
       baseColor: Colors.grey.shade800,
-      highlightColor: const Color.fromARGB(115, 99, 99, 99),
+      highlightColor: const Color.fromARGB(115, 127, 127, 127),
       period: const Duration(milliseconds: 2000),
       direction: ShimmerDirection.ttb,
       enabled: true,
@@ -77,50 +77,17 @@ class ShimmerLoading extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(
-                            12), // Rounded corners for the image
-                        child: Container(
-                          height: context.height * 0.30,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const SizedBox(width: 5),
-                          Container(
-                            width: 50,
-                            height: 14,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.circular(12), // Rounded corners
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Container(
-                            width: 60,
-                            height: 14,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.circular(12), // Rounded corners
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 )
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
             const Divider(
               color: Color(0xff242424),
               thickness: 0.5,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
           ],
         ),
       ),

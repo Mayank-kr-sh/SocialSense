@@ -97,7 +97,7 @@ class PostCard extends StatelessWidget {
                         const SizedBox(
                           width: 12,
                         ),
-                        Text('${post.totalLikes.toString()} replies'),
+                        Text('${post.totalComments.toString()} replies'),
                       ],
                     ),
                   ],

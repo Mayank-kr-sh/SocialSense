@@ -15,6 +15,7 @@ class CommentsController extends GetxController {
       TextEditingController(text: '');
   final RxBool isCommenting = false.obs;
   var comments = ''.obs;
+  var commentDeleted = false.obs;
 
   @override
   void onClose() {
@@ -84,6 +85,7 @@ class CommentsController extends GetxController {
         commentController.clear();
         commentLoading.value = false;
         Get.back();
+        update();
       } else {
         commentLoading.value = false;
         String errorMessage =
@@ -92,6 +94,67 @@ class CommentsController extends GetxController {
       }
     } catch (e) {
       commentLoading.value = false;
+      showErrorDialog(e.toString(), 'Error');
+      print(e.toString());
+    }
+  }
+
+  Future<void> deleteComment(String commentId) async {
+    commentDeleted.value = true;
+    final LoginController loginController = Get.put(LoginController());
+
+    final token = await loginController.getToken();
+    if (token == null) {
+      commentDeleted.value = false;
+      return;
+    }
+
+    final Post post = Get.arguments;
+    if (post.id.isEmpty) {
+      commentDeleted.value = false;
+      showErrorDialog('Post not found', 'Error');
+      return;
+    }
+    if (commentId.isEmpty) {
+      commentDeleted.value = false;
+      showErrorDialog('Comment not found', 'Error');
+      return;
+    }
+
+    print(
+      'user Token: $token, post Id: ${post.id}, comment: $commentId',
+    );
+
+    try {
+      commentDeleted.value = true;
+      var header = {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      };
+
+      var url = Uri.parse(
+        ApiEndPoints.baseUrl + ApiEndPoints.postEndpoints.delete + commentId,
+      );
+
+      var response = await http.delete(
+        url,
+        headers: header,
+      );
+
+      // print(response.body);
+
+      if (response.statusCode == 200) {
+        commentController.clear();
+        commentDeleted.value = false;
+        update();
+      } else {
+        commentDeleted.value = false;
+        String errorMessage =
+            json.decode(response.body)['msg'] ?? 'Unknown error';
+        showErrorDialog(errorMessage, 'Success');
+      }
+    } catch (e) {
+      commentDeleted.value = false;
       showErrorDialog(e.toString(), 'Error');
       print(e.toString());
     }
