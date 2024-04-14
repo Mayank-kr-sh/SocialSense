@@ -14,7 +14,7 @@ class NavigationService extends GetxService {
     const SearchScreen(),
     ThreadScreen(),
     HomeScreen(),
-    const NotificationScreen(),
+    NotificationScreen(),
     const ProfileScreen(),
   ];
 

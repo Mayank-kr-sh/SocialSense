@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:social_sense/controllers/login_controller.dart';
 import 'package:social_sense/controllers/user_controller.dart';
 import 'package:social_sense/models/post_model.dart';
+import 'package:social_sense/services/socket_service.dart';
 import 'package:social_sense/utils/api_endpoints.dart';
 import 'package:social_sense/utils/styles/helper.dart';
 import 'package:http/http.dart' as http;
@@ -13,9 +14,11 @@ class CommentsController extends GetxController {
   var commentLoading = false.obs;
   final TextEditingController commentController =
       TextEditingController(text: '');
+  final RxList<String> commentsList = RxList<String>();
   final RxBool isCommenting = false.obs;
   var comments = ''.obs;
   var commentDeleted = false.obs;
+  RxString newCommentNotification = ''.obs;
 
   @override
   void onClose() {

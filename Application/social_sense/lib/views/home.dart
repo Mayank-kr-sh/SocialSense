@@ -2,7 +2,9 @@ import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:social_sense/controllers/notification_controller.dart';
 import 'package:social_sense/services/navigation_services.dart';
+import 'package:social_sense/widgets/badge_icon.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key) {
@@ -10,6 +12,8 @@ class Home extends StatelessWidget {
   }
 
   final NavigationService navigationService = Get.put(NavigationService());
+  final NotificationController notificationController =
+      Get.find<NotificationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,32 +28,34 @@ class Home extends StatelessWidget {
           index: navigationService.currentIndex.value,
           color: Theme.of(context).primaryColor,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          items: const [
-            CurvedNavigationBarItem(
+          items: [
+            const CurvedNavigationBarItem(
               child: Icon(
                 Icons.search,
                 color: Colors.white,
                 size: 25,
               ),
             ),
-            CurvedNavigationBarItem(
+            const CurvedNavigationBarItem(
               child: Icon(
                 Icons.add,
                 color: Colors.white,
                 size: 25,
               ),
             ),
-            CurvedNavigationBarItem(
+            const CurvedNavigationBarItem(
               child: Icon(Icons.home_outlined, color: Colors.white, size: 25),
             ),
             CurvedNavigationBarItem(
-              child: Icon(
-                Icons.favorite_border_outlined,
-                color: Colors.white,
-                size: 25,
+              child: BadgeIcon(
+                icon: const Icon(Icons.favorite_border_outlined,
+                    color: Colors.white, size: 25),
+                badgeCount:
+                    notificationController.notifications.length.toString(),
+                showBadge: notificationController.notifications.isNotEmpty,
               ),
             ),
-            CurvedNavigationBarItem(
+            const CurvedNavigationBarItem(
               child: Icon(
                 Icons.person_outline,
                 color: Colors.white,
@@ -58,6 +64,9 @@ class Home extends StatelessWidget {
             ),
           ],
           onTap: (index) {
+            if (index == 3) {
+              notificationController.markNotificationsRead();
+            }
             navigationService.currentIndex.value = index;
           },
         ),
