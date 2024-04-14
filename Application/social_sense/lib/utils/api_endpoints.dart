@@ -16,6 +16,8 @@ class UserEndPoint {
   final String get = '/user';
   final String post = '/upload';
   final String fetch = '/fetch';
+  final String fetchSingle = '/fetch/';
+  final String comments = 'comments/';
 }
 
 class PostEndPoint {
