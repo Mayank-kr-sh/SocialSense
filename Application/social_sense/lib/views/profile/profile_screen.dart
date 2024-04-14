@@ -3,9 +3,13 @@ import 'package:get/get.dart';
 import 'package:social_sense/controllers/login_controller.dart';
 import 'package:social_sense/controllers/profile_controller.dart';
 import 'package:social_sense/controllers/user_controller.dart';
+import 'package:social_sense/models/post_model.dart';
 import 'package:social_sense/routes/route_names.dart';
 import 'package:social_sense/utils/styles/button_styles.dart';
+import 'package:social_sense/widgets/card_loader.dart';
 import 'package:social_sense/widgets/image.dart';
+import 'package:social_sense/widgets/post_card.dart';
+import 'package:social_sense/widgets/reply_shimmer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -17,6 +21,13 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   final ProfileController _profileController = Get.put(ProfileController());
   final UserController userController = Get.put(UserController());
+
+  @override
+  void initState() {
+    super.initState();
+    _profileController.fetchUserPost(userController.getUser!.id);
+    _profileController.fetchUserComments(userController.getUser!.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,29 +143,109 @@ class _ProfileScreenState extends State<ProfileScreen> {
             },
             body: TabBarView(
               children: [
-                GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 12,
-                  ),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Image.asset('assets/images/icon.jpg');
-                  },
+                Obx(
+                  () => _profileController.posts.isEmpty
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return const ShimmerLoading();
+                          },
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _profileController.posts.length,
+                          itemBuilder: (context, index) {
+                            final PostModel postModel =
+                                _profileController.posts.toList()[index];
+                            return Column(
+                              children: postModel.posts.reversed.map((post) {
+                                return PostCard(post: post);
+                              }).toList(),
+                            );
+                          },
+                        ),
                 ),
-                ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: Image.asset(
-                        'assets/images/icon.jpg',
-                      ),
-                      title: const Text('Title'),
-                      subtitle: const Text('Subtitle'),
-                    );
-                  },
-                ),
+                Obx(
+                  () => _profileController.comments.isEmpty
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: 5,
+                          itemBuilder: (context, index) {
+                            return const ReplyShimmer();
+                          },
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _profileController.comments.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Card(
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        height: 80,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          image: DecorationImage(
+                                            image: NetworkImage(
+                                              _profileController
+                                                          .comments[index]
+                                                          .post
+                                                          ?.media
+                                                          .isNotEmpty ==
+                                                      true
+                                                  ? _profileController
+                                                      .comments[index]
+                                                      .post!
+                                                      .media[0]
+                                                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                            ),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _profileController
+                                                .comments[index].user.name,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            _profileController
+                                                .comments[index].text,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                )
               ],
             ),
           ),
