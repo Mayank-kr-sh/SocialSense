@@ -1,15 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:social_sense/controllers/comments_controller.dart';
+import 'package:social_sense/controllers/user_controller.dart';
 import 'package:social_sense/models/post_model.dart';
+import 'package:social_sense/services/socket_service.dart';
 import 'package:social_sense/widgets/comment_Shimmer.dart';
 import 'package:social_sense/widgets/image.dart';
 
-class Comments extends StatelessWidget {
+class Comments extends StatefulWidget {
   Comments({super.key});
 
+  @override
+  State<Comments> createState() => _CommentsState();
+}
+
+class _CommentsState extends State<Comments> {
   final Post post = Get.arguments;
+
   final CommentsController commentController = Get.put(CommentsController());
+  final UserController loginController = Get.put(UserController());
+  final SocketService socketService = SocketService();
+
+  @override
+  void initState() {
+    super.initState();
+    socketService.createSocketConnection();
+  }
+
+  @override
+  void dispose() {
+    socketService.disconnect();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +49,19 @@ class Comments extends StatelessWidget {
             () => TextButton(
               onPressed: () {
                 commentController.postComment();
+                final userId = loginController.getUser?.id ?? 'Default User Id';
+                final userName =
+                    loginController.getUser?.name ?? 'Default User';
+                socketService.sendComment(
+                  post.id,
+                  userId,
+                  commentController.comments.value,
+                  userName,
+                  post.media[0],
+                );
+                socketService.setNotificationHandler((data) {
+                  commentController.newCommentNotification.value = data;
+                });
               },
               child: commentController.commentLoading.value
                   ? const SizedBox(

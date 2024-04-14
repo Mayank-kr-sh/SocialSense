@@ -46,7 +46,6 @@ class HomeController extends GetxController {
         final jsonData = json.decode(response.body);
         final postModel = PostModel.fromJson(jsonData);
         posts.value = [postModel];
-        print('First Post User Name: ${posts[0].posts[2].user.name}');
         print('Data loaded successfully!');
       } else {
         loading.value = false;

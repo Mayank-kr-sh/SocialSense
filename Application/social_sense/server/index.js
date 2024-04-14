@@ -3,11 +3,15 @@ const db = require("./config/database");
 const router = require("./routes/UserRoute");
 const fileUpload = require("express-fileupload");
 const cloudinary = require("./config/cloudinary");
+const http = require("http");
+const socketIo = require("socket.io");
 require("dotenv").config();
 cloudinary.cloudinaryConnect();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
 app.get("/", (req, res) => {
   res.send("API is Runnig for SocialScence.....");
@@ -23,8 +27,21 @@ app.use(
 
 app.use("/api/v1", router);
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+io.on("connection", (socket) => {
+  console.log("New client connected: " + socket.id);
+
+  socket.on("new_comment", (data) => {
+    console.log(`Received new Comment data: ${JSON.stringify(data)}`);
+    socket.broadcast.emit("notify_user", data);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected: " + socket.id);
+  });
+});
+
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
 
 db.dbConnect();

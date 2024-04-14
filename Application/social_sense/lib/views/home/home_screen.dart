@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
               SliverAppBar(
                 title: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
-                  child: Image.asset('assets/images/logo.png',
+                  child: Image.asset('assets/images/logo1.png',
                       height: 50, width: 300),
                 ),
                 centerTitle: true,
@@ -46,12 +46,12 @@ class HomeScreen extends StatelessWidget {
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
                               itemCount: controller.posts.length,
-                              reverse: true,
                               itemBuilder: (context, index) {
                                 final PostModel postModel =
-                                    controller.posts.reversed.toList()[index];
+                                    controller.posts.toList()[index];
                                 return Column(
-                                  children: postModel.posts.map((post) {
+                                  children:
+                                      postModel.posts.reversed.map((post) {
                                     return PostCard(post: post);
                                   }).toList(),
                                 );
