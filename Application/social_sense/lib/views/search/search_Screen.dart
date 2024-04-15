@@ -39,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
             expandedHeight: 105,
             collapsedHeight: 80,
             flexibleSpace: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 105),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 90),
               child: SearchInput(
                   searchController: _searchController, callback: searchUser),
             ),

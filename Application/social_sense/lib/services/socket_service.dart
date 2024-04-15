@@ -7,7 +7,8 @@ class SocketService {
 
   void createSocketConnection() {
     socket = IO.io(
-        'http://10.0.5.212:3000',
+        // 'http://10.0.5.212:3000',
+        'https://socialsense.onrender.com',
         IO.OptionBuilder()
             .setTransports(['websocket'])
             .disableAutoConnect()

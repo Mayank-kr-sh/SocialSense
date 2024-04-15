@@ -18,7 +18,7 @@ class PostCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                width: context.width * 0.12,
+                width: context.width * 0.11,
                 child: const CircleImage(
                     // imageUrl: post.user.profilePicture,
                     ),
