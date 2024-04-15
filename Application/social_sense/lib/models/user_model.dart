@@ -26,6 +26,11 @@ class UserModel {
     );
   }
 
+  @override
+  String toString() {
+    return 'User{id: $id, name: $name, email: $email, dob: $dob, bio: $bio, phone: $phone}';
+  }
+
   Map<String, dynamic> toJson() {
     return {
       '_id': id,
@@ -37,12 +42,3 @@ class UserModel {
     };
   }
 }
-
-// class UserModel {
-//   static String id = '';
-//   static String name = '';
-//   static String email = '';
-//   static String? dob;
-//   static String? bio;
-//   static String? phone;
-// }

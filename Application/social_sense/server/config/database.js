@@ -3,9 +3,7 @@ require("dotenv").config();
 
 exports.dbConnect = () => {
   mongoose
-    .connect(
-      "mongodb+srv://mayankkiiit:UdmM8AlgHiZHVhgX@cluster0.ravr2gf.mongodb.net/Data?retryWrites=true&w=majority&appName=Cluster0"
-    )
+    .connect(process.env.MONGO_URI)
     .then(() => {
       console.log("Connected to database");
     })
