@@ -18,6 +18,7 @@ class UserEndPoint {
   final String fetch = '/fetch';
   final String fetchSingle = '/fetch/';
   final String comments = 'comments/';
+  final String search = 'search';
 }
 
 class PostEndPoint {

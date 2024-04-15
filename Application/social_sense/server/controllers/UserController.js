@@ -127,3 +127,29 @@ exports.update = async (req, res) => {
     });
   }
 };
+
+exports.searchUser = async (req, res) => {
+  const { name } = req.query;
+  try {
+    const users = await User.find({ name: { $regex: name, $options: "i" } });
+
+    if (!users) {
+      return res.status(400).json({
+        success: false,
+        message: "No user found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Users found successfully",
+      data: users,
+    });
+  } catch (err) {
+    console.error(err.message);
+    return res.status(400).json({
+      success: false,
+      message: "Users cannot be found. Please try again later.",
+    });
+  }
+};
