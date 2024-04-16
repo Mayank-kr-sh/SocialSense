@@ -25,26 +25,27 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div style="display: flex; flex-direction: row;">
 <img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/b46ba4fd-0b5d-4aa8-a2d0-4a19a54c5f59" width="250" height="600">&nbsp;&nbsp;&nbsp;
-<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/4ab4b32e-14b9-45b7-a2b4-3333dccc7ce3" width="250" height="600">&nbsp;&nbsp;&nbsp;
+<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/09d7ad1a-ee7e-40f1-bbbb-628e0ed6cad6" width="250" height="600">&nbsp;&nbsp;&nbsp;
+<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/26641956-8826-4a6e-a965-af322b2daa32" width="250" height="600">&nbsp;&nbsp;&nbsp;
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div style="display: flex; flex-direction: row;">
+<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/288cf1e7-271c-4d65-9aa3-e762e8db151c" width="250" height="600">&nbsp;&nbsp;&nbsp;
 <img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/89fcc5ac-d3b7-4230-9b78-0d6515853b0d" width="250" height="600">&nbsp;&nbsp;&nbsp;
-</div>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<div style="display: flex; flex-direction: row;">
 <img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/f4dcf002-4a55-434d-8e0b-5ae1e085cacb" width="250" height="600">&nbsp;&nbsp;&nbsp;
-<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/088794b0-4436-48f5-bee0-82e8209b206f" width="250" height="600">&nbsp;&nbsp;&nbsp;
-<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/3f066246-840a-4780-8a84-c4f784138abc" width="250" height="600">&nbsp;&nbsp;&nbsp;
 </div>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div style="display: flex; flex-direction: row;">
+
+<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/4ab4b32e-14b9-45b7-a2b4-3333dccc7ce3" width="250" height="600">&nbsp;&nbsp;&nbsp;
 <img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/98ac217a-5071-4f3a-884b-5ab9f9ec74bd" width="250" height="600">&nbsp;&nbsp;&nbsp;
 <img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/9f42dd17-4bca-4c1c-b43a-871b9fb754d2" width="250" height="600">&nbsp;&nbsp;&nbsp;
-<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/fb0bd8d6-c756-45d1-8f6a-becf380b3566" width="250" height="600">&nbsp;&nbsp;&nbsp;
 </div>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <div style="display: flex; flex-direction: row;">
-<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/26641956-8826-4a6e-a965-af322b2daa32" width="250" height="600">&nbsp;&nbsp;&nbsp;
-<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/288cf1e7-271c-4d65-9aa3-e762e8db151c" width="250" height="600">&nbsp;&nbsp;&nbsp;
-<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/09d7ad1a-ee7e-40f1-bbbb-628e0ed6cad6" width="250" height="600">&nbsp;&nbsp;&nbsp;
+<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/fb0bd8d6-c756-45d1-8f6a-becf380b3566" width="250" height="600">&nbsp;&nbsp;&nbsp;
+<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/3f066246-840a-4780-8a84-c4f784138abc" width="250" height="600">&nbsp;&nbsp;&nbsp;
+<img src = "https://github.com/Mayank-kr-sh/SocialSense/assets/107645749/088794b0-4436-48f5-bee0-82e8209b206f" width="250" height="600">&nbsp;&nbsp;&nbsp;
 </div>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
